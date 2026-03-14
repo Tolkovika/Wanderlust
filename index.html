@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wanderlust — spin the globe, pick a destination, book your trip.">
+  <title>Wanderlust — Explore the World</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="canvas-container" aria-hidden="true"></div>
+
+  <header class="header">
+    <nav class="nav">
+      <a href="#" class="nav-brand">
+        <span class="nav-brand-icon" aria-hidden="true">&#10022;</span>
+        <span class="nav-brand-text">WANDERLUST</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" class="nav-link" data-nav="destinations">Destinations</a>
+        <a href="#" class="nav-link" data-nav="experiences">Experiences</a>
+        <a href="#" class="nav-link" data-nav="journal">Journal</a>
+        <a href="#" class="nav-link" data-nav="about">About</a>
+        <a href="#" class="nav-link nav-link-cta" data-nav="book">Book a trip</a>
+      </div>
+      <button class="mob-hamburger" id="mob-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mob-menu" id="mob-menu">
+    <button class="mob-menu-close" id="mob-menu-close" aria-label="Close menu">&times;</button>
+    <nav class="mob-menu-nav">
+      <a href="#" class="mob-menu-link" data-nav="destinations">Destinations</a>
+      <a href="#" class="mob-menu-link" data-nav="experiences">Experiences</a>
+      <a href="#" class="mob-menu-link" data-nav="journal">Journal</a>
+      <a href="#" class="mob-menu-link" data-nav="about">About</a>
+      <a href="#" class="mob-menu-link" data-nav="book">Book a Trip</a>
+    </nav>
+    <span class="mob-menu-tagline">Spin the globe. Go.</span>
+  </div>
+
+  <!-- Mobile Bottom Bar -->
+  <nav class="mob-bar" id="mob-bar">
+    <button class="mob-bar-btn active" data-nav="globe" aria-label="Globe">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    </button>
+    <button class="mob-bar-btn" data-nav="destinations" aria-label="Destinations">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+    </button>
+    <button class="mob-bar-btn" data-nav="journal" aria-label="Journal">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    </button>
+    <button class="mob-bar-btn" data-nav="about" aria-label="About">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    </button>
+    <button class="mob-bar-btn" data-nav="book" aria-label="Book">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </button>
+  </nav>
+
+  <main>
+    <section class="hero" aria-label="Globe explorer">
+      <div class="hero-content">
+        <h1 class="hero-headline">Find your<br>next place</h1>
+        <p class="hero-subtitle">Spin the globe. Pick a country. Go.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Search -->
+  <div class="search-wrap" id="search-wrap">
+    <div class="search-bar">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" class="search-input" placeholder="Search destinations..." autocomplete="off" spellcheck="false">
+      <kbd class="search-kbd" id="search-kbd">/</kbd>
+    </div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+  </div>
+
+  <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true"></div>
+
+  <aside id="country-panel" class="country-panel" aria-label="Travel offers">
+    <button class="panel-close" id="panel-close" aria-label="Close panel">&#8592;</button>
+    <div class="panel-hero" id="panel-hero">
+      <div class="panel-hero-overlay"></div>
+      <div class="panel-hero-content">
+        <span class="panel-region" id="panel-region"></span>
+        <h2 id="panel-country-name"></h2>
+      </div>
+    </div>
+    <div class="panel-body">
+      <p class="panel-desc" id="panel-country-desc"></p>
+      <div class="panel-offers" id="panel-offers"></div>
+    </div>
+  </aside>
+
+  <div class="drag-hint" aria-hidden="true">
+    <span class="drag-hint-label">Drag to explore</span>
+    <div class="drag-hint-line"></div>
+  </div>
+
+  <!-- Destinations Page -->
+  <div class="page-overlay" id="page-destinations">
+    <button class="page-close" aria-label="Back">&#8592;</button>
+    <div class="page-content dest-page-content">
+      <header class="page-header">
+        <span class="page-tag">49 handpicked places</span>
+        <h1 class="page-title">Destinations</h1>
+        <p class="page-subtitle">Every place on this list was visited, vetted, and loved by our team. Pick one — we'll handle the rest.</p>
+      </header>
+
+      <div class="dest-filters" id="dest-filters">
+        <button class="dest-filter active" data-region="all">All <span class="dest-filter-count">49</span></button>
+        <button class="dest-filter" data-region="Europe">Europe <span class="dest-filter-count">24</span></button>
+        <button class="dest-filter" data-region="Asia">Asia <span class="dest-filter-count">9</span></button>
+        <button class="dest-filter" data-region="Americas">Americas <span class="dest-filter-count">7</span></button>
+        <button class="dest-filter" data-region="Africa">Africa <span class="dest-filter-count">5</span></button>
+        <button class="dest-filter" data-region="Middle East">Middle East <span class="dest-filter-count">2</span></button>
+        <button class="dest-filter" data-region="Oceania">Oceania <span class="dest-filter-count">2</span></button>
+      </div>
+
+      <div class="dest-grid" id="dest-grid"></div>
+
+      <div class="dest-bottom">
+        <p class="dest-bottom-text">Can't decide?</p>
+        <button class="dest-bottom-cta" data-nav="book">Let us plan for you</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experiences Page -->
+  <div class="page-overlay" id="page-experiences">
+    <button class="page-close" aria-label="Back">&#8592;</button>
+    <div class="page-content">
+      <header class="page-header">
+        <span class="page-tag">Curated collections</span>
+        <h1 class="page-title">Experiences</h1>
+        <p class="page-subtitle">Handpicked journeys for every kind of traveler. Each one designed, tested, and refined by people who have actually been there.</p>
+      </header>
+      <div class="exp-grid">
+        <article class="exp-card">
+          <div class="exp-card-img" style="background-image:url('images/kenya.jpg')"></div>
+          <div class="exp-card-body">
+            <span class="exp-card-tag">Wildlife</span>
+            <h2>Safari & Wilderness</h2>
+            <p>Dawn game drives across the Masai Mara. Sundowners overlooking the Serengeti. Elephants close enough to hear them breathe.</p>
+            <div class="exp-card-destinations">Kenya &middot; Tanzania &middot; South Africa</div>
+            <span class="exp-card-from">From $2,800 / person</span>
+          </div>
+        </article>
+        <article class="exp-card">
+          <div class="exp-card-img" style="background-image:url('images/maldives.jpg')"></div>
+          <div class="exp-card-body">
+            <span class="exp-card-tag">Luxury</span>
+            <h2>Luxury Resorts & Retreats</h2>
+            <p>Overwater villas, private plunge pools, breakfasts that arrive by boat. The kind of rest that rewrites your posture.</p>
+            <div class="exp-card-destinations">Maldives &middot; Indonesia &middot; Thailand</div>
+            <span class="exp-card-from">From $3,500 / person</span>
+          </div>
+        </article>
+        <article class="exp-card">
+          <div class="exp-card-img" style="background-image:url('images/nepal.jpg')"></div>
+          <div class="exp-card-body">
+            <span class="exp-card-tag">Adventure</span>
+            <h2>Mountain & Adventure</h2>
+            <p>Annapurna base camp treks, Patagonian glacier hikes, Iceland's highland trails. Bring boots, leave comfort zones.</p>
+            <div class="exp-card-destinations">Nepal &middot; Argentina &middot; Iceland &middot; Norway</div>
+            <span class="exp-card-from">From $1,900 / person</span>
+          </div>
+        </article>
+        <article class="exp-card">
+          <div class="exp-card-img" style="background-image:url('images/japan.jpg')"></div>
+          <div class="exp-card-body">
+            <span class="exp-card-tag">Culture</span>
+            <h2>Cultural Immersion</h2>
+            <p>Tea ceremonies in Kyoto, cooking classes in Marrakech, flamenco in Seville. Travel that changes how you see, not just what you see.</p>
+            <div class="exp-card-destinations">Japan &middot; Morocco &middot; Spain &middot; India</div>
+            <span class="exp-card-from">From $2,200 / person</span>
+          </div>
+        </article>
+        <article class="exp-card">
+          <div class="exp-card-img" style="background-image:url('images/france.jpg')"></div>
+          <div class="exp-card-body">
+            <span class="exp-card-tag">Gastronomy</span>
+            <h2>Food & Wine Journeys</h2>
+            <p>Vineyard lunches in Provence, pasta workshops in Bologna, street food crawls in Bangkok. Eat first, ask questions later.</p>
+            <div class="exp-card-destinations">France &middot; Italy &middot; Thailand &middot; Peru</div>
+            <span class="exp-card-from">From $2,400 / person</span>
+          </div>
+        </article>
+        <article class="exp-card">
+          <div class="exp-card-img" style="background-image:url('images/finland.jpg')"></div>
+          <div class="exp-card-body">
+            <span class="exp-card-tag">Polar</span>
+            <h2>Northern Lights & Arctic</h2>
+            <p>Glass igloos under the aurora, husky safaris through silent forests, midnight sun that never sets. The sky does things here.</p>
+            <div class="exp-card-destinations">Finland &middot; Iceland &middot; Norway &middot; Sweden</div>
+            <span class="exp-card-from">From $3,100 / person</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Page -->
+  <div class="page-overlay" id="page-about">
+    <button class="page-close" aria-label="Back">&#8592;</button>
+    <div class="about-page">
+
+      <!-- Hero Statement -->
+      <section class="about-hero">
+        <span class="about-hero-label about-reveal">What we do</span>
+        <h1 class="about-hero-headline about-reveal">We don't sell trips.<br><em>We craft memories</em> you'll never<br>stop talking about.</h1>
+        <div class="about-hero-line about-reveal"></div>
+      </section>
+
+      <!-- Team Pull Quote -->
+      <section class="about-team-section about-reveal">
+        <div class="about-team-line"></div>
+        <span class="about-team-label">Who we are</span>
+        <blockquote class="about-team-quote">
+          Our team doesn't chase popular. We chase remarkable.<br>
+          Every destination we recommend was found by someone on our team who went off the map, got lost on purpose, and came back with a story worth telling. We specialize in the places that don't make it to top-10 lists — because the best experiences rarely do.
+        </blockquote>
+        <div class="about-team-line"></div>
+      </section>
+
+      <!-- Value Cards -->
+      <section class="about-values-section">
+        <span class="about-values-label about-reveal">Here's what you get</span>
+        <div class="about-values-grid">
+
+          <article class="about-vcard about-reveal">
+            <div class="about-vcard-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h2 class="about-vcard-title">Handpicked destinations</h2>
+            <p class="about-vcard-text">No generic tours. Every place on our list was visited, vetted, and loved by someone on our team first.</p>
+          </article>
+
+          <article class="about-vcard about-reveal">
+            <div class="about-vcard-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <h2 class="about-vcard-title">24/7 personal concierge</h2>
+            <p class="about-vcard-text">One dedicated travel expert from first call to final flight home. Call, text, or message — any hour, any timezone.</p>
+          </article>
+
+          <article class="about-vcard about-reveal">
+            <div class="about-vcard-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h2 class="about-vcard-title">Every detail, handled</h2>
+            <p class="about-vcard-text">Flights, transfers, hotels, restaurants, experiences — all booked, confirmed, and double-checked. Nothing left to chance.</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Closing CTA -->
+      <section class="about-cta-section about-reveal">
+        <h2 class="about-cta-headline">Ready?</h2>
+        <button class="about-cta-btn" data-nav="book">Start Planning Your Trip</button>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Journal Page -->
+  <div class="page-overlay" id="page-journal">
+    <button class="page-close" aria-label="Back">&#8592;</button>
+    <div class="journal-featured" id="journal-featured"></div>
+    <div class="journal-lower">
+      <span class="journal-section-label">Latest dispatches</span>
+      <div class="journal-mosaic" id="journal-mosaic"></div>
+    </div>
+  </div>
+
+  <!-- Article View -->
+  <div class="page-overlay" id="page-article">
+    <button class="page-close" aria-label="Back" id="article-back">&#8592;</button>
+    <div class="article-view" id="article-view"></div>
+  </div>
+
+  <!-- Exit Intent Popup -->
+  <div class="exit-popup" id="exit-popup" aria-hidden="true">
+    <div class="exit-popup-backdrop"></div>
+    <div class="exit-popup-dialog">
+      <button class="exit-popup-close" id="exit-popup-close" aria-label="Close">&times;</button>
+      <span class="exit-popup-tag">Before you go</span>
+      <p class="exit-popup-text">Receive our monthly dispatch.<br>One destination. One story. One reason to go.</p>
+      <form class="exit-popup-form" id="exit-popup-form">
+        <input type="email" class="exit-popup-input" placeholder="your@email.com" required>
+        <button type="submit" class="exit-popup-btn">Send it to me</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Book a Trip Panel (side panel) -->
+  <aside class="book-panel" id="page-book">
+    <button class="book-panel-close" id="book-panel-close" aria-label="Back">&#8592;</button>
+    <div class="book-panel-body">
+      <header class="book-panel-header">
+        <span class="page-tag">Start planning</span>
+        <h2 class="book-panel-title">Book your trip</h2>
+        <p class="book-panel-subtitle">Tell us where you want to go. We'll handle the rest.</p>
+      </header>
+      <form class="book-form" id="book-trip-form" novalidate>
+        <div class="booking-form-field">
+          <label for="book-destination">Destination</label>
+          <select id="book-destination" name="destination" required>
+            <option value="" disabled selected>Choose a destination</option>
+          </select>
+        </div>
+        <div class="booking-form-field">
+          <label for="book-trip-type">Trip type</label>
+          <select id="book-trip-type" name="trip_type">
+            <option>Safari & Wilderness</option>
+            <option>Luxury Resort & Retreat</option>
+            <option>Mountain & Adventure</option>
+            <option>Cultural Immersion</option>
+            <option>Food & Wine Journey</option>
+            <option>City Break</option>
+            <option selected>Custom Itinerary</option>
+          </select>
+        </div>
+        <div class="booking-form-row">
+          <div class="booking-form-field">
+            <label for="book-dates">Preferred dates</label>
+            <input type="text" id="book-dates" name="dates" placeholder="e.g. Jun 15 – Jun 22">
+          </div>
+          <div class="booking-form-field">
+            <label for="book-travelers">Travelers</label>
+            <select id="book-travelers" name="travelers">
+              <option>1 traveler</option>
+              <option selected>2 travelers</option>
+              <option>3 travelers</option>
+              <option>4+ travelers</option>
+            </select>
+          </div>
+        </div>
+        <div class="booking-form-row">
+          <div class="booking-form-field">
+            <label for="book-name">Full name</label>
+            <input type="text" id="book-name" name="name" placeholder="Jane Doe" required>
+          </div>
+          <div class="booking-form-field">
+            <label for="book-email">Email</label>
+            <input type="email" id="book-email" name="email" placeholder="jane@example.com" required>
+          </div>
+        </div>
+        <div class="booking-form-field">
+          <label for="book-notes">Tell us more <span class="optional">(optional)</span></label>
+          <textarea id="book-notes" name="notes" rows="3" placeholder="Budget range, must-see places, special occasions, dietary needs..."></textarea>
+        </div>
+        <button type="submit" class="booking-submit">Send request</button>
+        <p class="booking-disclaimer">No payment required — our travel team will reach out within 24 hours to craft your perfect itinerary.</p>
+      </form>
+      <div class="booking-success" id="book-trip-success">
+        <div class="booking-success-icon">&#10003;</div>
+        <h3>Request received</h3>
+        <p>We'll craft your perfect itinerary and reach out within 24 hours.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Booking Modal -->
+  <div id="booking-modal" class="booking-modal" aria-hidden="true">
+    <div class="booking-modal-backdrop"></div>
+    <div class="booking-modal-dialog">
+      <button class="booking-modal-close" id="booking-modal-close" aria-label="Close">&times;</button>
+      <div class="booking-modal-header">
+        <span class="booking-modal-tag" id="booking-modal-tag"></span>
+        <h3 class="booking-modal-title" id="booking-modal-title"></h3>
+        <p class="booking-modal-subtitle" id="booking-modal-subtitle"></p>
+      </div>
+      <form class="booking-form" id="booking-form" novalidate>
+        <div class="booking-form-row">
+          <div class="booking-form-field">
+            <label for="booking-name">Full name</label>
+            <input type="text" id="booking-name" name="name" placeholder="Jane Doe" required>
+          </div>
+          <div class="booking-form-field">
+            <label for="booking-email">Email</label>
+            <input type="email" id="booking-email" name="email" placeholder="jane@example.com" required>
+          </div>
+        </div>
+        <div class="booking-form-row">
+          <div class="booking-form-field">
+            <label for="booking-date">Preferred dates</label>
+            <input type="text" id="booking-date" name="dates" placeholder="e.g. Jun 15 – Jun 22">
+          </div>
+          <div class="booking-form-field">
+            <label for="booking-travelers">Travelers</label>
+            <select id="booking-travelers" name="travelers">
+              <option>1 traveler</option>
+              <option selected>2 travelers</option>
+              <option>3 travelers</option>
+              <option>4+ travelers</option>
+            </select>
+          </div>
+        </div>
+        <div class="booking-form-field">
+          <label for="booking-notes">Special requests <span class="optional">(optional)</span></label>
+          <textarea id="booking-notes" name="notes" rows="2" placeholder="Dietary needs, accessibility, celebrations..."></textarea>
+        </div>
+        <button type="submit" class="booking-submit">Reserve now</button>
+        <p class="booking-disclaimer">No payment required — our travel team will reach out within 24 hours to finalize your itinerary.</p>
+      </form>
+      <div class="booking-success" id="booking-success">
+        <div class="booking-success-icon">&#10003;</div>
+        <h3>Request received</h3>
+        <p>We'll craft your perfect itinerary and reach out within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
